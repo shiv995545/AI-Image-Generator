@@ -34,24 +34,24 @@ const examplePrompts = [
   document.body.classList.toggle("dark-theme", isDarkTheme);
   themeToggle.querySelector("i").className = isDarkTheme ? "fa-solid fa-sun" : "fa-solid fa-moon";
 })();
-// Switch between light and dark themes
+
 const toggleTheme = () => {
   const isDarkTheme = document.body.classList.toggle("dark-theme");
   localStorage.setItem("theme", isDarkTheme ? "dark" : "light");
   themeToggle.querySelector("i").className = isDarkTheme ? "fa-solid fa-sun" : "fa-solid fa-moon";
 };
-// Calculating width and height based on chosen ratio
+
 const getImageDimensions = (aspectRatio, baseSize = 512) => {
   const [width, height] = aspectRatio.split("/").map(Number);
   const scaleFactor = baseSize / Math.sqrt(width * height);
   let calculatedWidth = Math.round(width * scaleFactor);
   let calculatedHeight = Math.round(height * scaleFactor);
-  // Ensure dimensions are multiples of 16 (AI model requirements)
+
   calculatedWidth = Math.floor(calculatedWidth / 16) * 16;
   calculatedHeight = Math.floor(calculatedHeight / 16) * 16;
   return { width: calculatedWidth, height: calculatedHeight };
 };
-// Replace loading spinner with the actual image
+
 const updateImageCard = (index, imageUrl) => {
   const imgCard = document.getElementById(`img-card-${index}`);
   if (!imgCard) return;
@@ -63,12 +63,12 @@ const updateImageCard = (index, imageUrl) => {
                   </a>
                 </div>`;
 };
-// Send requests to Hugging Face API to create images
+// Send requests to Hugging Face API
 const generateImages = async (selectedModel, imageCount, aspectRatio, promptText) => {
   const MODEL_URL = `https://api-inference.huggingface.co/models/${selectedModel}`;
   const { width, height } = getImageDimensions(aspectRatio);
   generateBtn.setAttribute("disabled", "true");
-  // Create an array of image generation promises
+  // Create an array
   const imagePromises = Array.from({ length: imageCount }, async (_, i) => {
     try {
       // Send request to the AI model API
@@ -85,7 +85,7 @@ const generateImages = async (selectedModel, imageCount, aspectRatio, promptText
         }),
       });
       if (!response.ok) throw new Error((await response.json())?.error);
-      // Convert response to an image URL and update the image card
+
       const blob = await response.blob();
       updateImageCard(i, URL.createObjectURL(blob));
     } catch (error) {
@@ -98,7 +98,7 @@ const generateImages = async (selectedModel, imageCount, aspectRatio, promptText
   await Promise.allSettled(imagePromises);
   generateBtn.removeAttribute("disabled");
 };
-// Create placeholder cards with loading spinners
+
 const createImageCards = (selectedModel, imageCount, aspectRatio, promptText) => {
   galleryGrid.innerHTML = "";
   for (let i = 0; i < imageCount; i++) {
@@ -111,7 +111,7 @@ const createImageCards = (selectedModel, imageCount, aspectRatio, promptText) =>
         </div>
       </div>`;
   }
-  // Stagger animation
+
   document.querySelectorAll(".img-card").forEach((card, i) => {
     setTimeout(() => card.classList.add("animate-in"), 100 * i);
   });
@@ -127,7 +127,7 @@ const handleFormSubmit = (e) => {
   const promptText = promptInput.value.trim();
   createImageCards(selectedModel, imageCount, aspectRatio, promptText);
 };
-// Fill prompt input with random example (typing effect)
+
 promptBtn.addEventListener("click", () => {
   const prompt = examplePrompts[Math.floor(Math.random() * examplePrompts.length)];
   let i = 0;
@@ -135,10 +135,10 @@ promptBtn.addEventListener("click", () => {
   promptInput.value = "";
 
 
-  // Disable the button during typing animation
+
   promptBtn.disabled = true;
   promptBtn.style.opacity = "0.5";
-  // Typing effect
+
   const typeInterval = setInterval(() => {
     if (i < prompt.length) {
       promptInput.value += prompt.charAt(i);
