@@ -1,4 +1,3 @@
-/* Importing Google Fonts - Inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
 * {
   margin: 0;
@@ -329,7 +328,7 @@ body.dark-theme .container {
   background: rgba(255, 255, 255, 0.4);
   transform: scale(1.05);
 }
-/* Responsive media query code for small screens */
+/* Responsive media query */
 @media (max-width: 768px) {
   .container {
     padding: 18px;
@@ -379,7 +378,7 @@ body.dark-theme .container {
   transform: translateY(-3px);
 }
 
-/* Tooltip for Theme Toggle */
+
 .theme-toggle::after {
   content: "Toggle Theme";
   position: absolute;
@@ -414,13 +413,13 @@ body.dark-theme .container {
   }
 }
 
-/* Input and Select Subtle Hover */
+
 .prompt-input:hover,
 .custom-select:hover {
   border-color: var(--color-primary-dark);
 }
 
-/* Card fade-in with stagger */
+
 .gallery-grid .img-card.animate-in {
   animation: fadeInUp 0.5s ease forwards;
 }
